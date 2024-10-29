@@ -3,6 +3,7 @@ import sys
 import re
 import json
 import sox
+import shutil
 
 from main import voice_change, find_full_path
 
@@ -78,36 +79,5 @@ for song_data in song_datas:
         )
         # mr 처리
         mr_input_path = os.path.dirname(input_path)
-        mr_output_path = (
-            f"/content/drive/MyDrive/infer/{voice_model}/[{pitch_value}]{song_title}/mr"
-        )
+        mr_output_path = f"/content/drive/MyDrive/songRequest/results/{request_date}/{request_user_id}/{request_id}/[{pitch_value}][{voice_model}]{song_title}"
         process_mr_files(mr_input_path, mr_output_path, pitch_value)
-
-
-# for song_title in input_song_titles:
-#     input_paths = find_full_path(song_title, isMan)
-#     # 파일 경로를 숫자에 따라 정렬
-#     sorted_input_paths = sorted(input_paths, key=extract_number)
-#     if not os.path.exists(f"/content/drive/MyDrive/infer/{song_title}"):
-#         os.mkdir(f"/content/drive/MyDrive/infer/{song_title}")
-#     for index, input_path in enumerate(sorted_input_paths):
-#         if pitch_control:
-#             pitch_value = pitch_values[index]
-#             print(pitch_value)
-#         else:
-#             pitch_value = 0
-#         file_name = os.path.basename(input_path)
-#         output_path = f"/content/drive/MyDrive/infer/{song_title}/{file_name}.mp3"
-#         voice_change(
-#             voice_model,
-#             input_path,
-#             output_path,
-#             pitch_value,
-#             f0_method="rmvpe",
-#             index_rate=0.66,
-#             filter_radius=3,
-#             rms_mix_rate=0.25,
-#             protect=0.33,
-#             crepe_hop_length=128,
-#             is_webui=0,
-#         )
