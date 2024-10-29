@@ -35,8 +35,10 @@ def process_mr_files(input_directory, output_directory, semitones):
 
 
 if __name__ == "__main__":
-    song_datas_str = sys.argv[1]  # 첫 번째 인자
+    song_datas_str = sys.argv[1]
+    request_date_str = sys.argv[2]
     song_datas = json.loads(song_datas_str)
+    request_date = number(request_date_str)
     print(song_datas)
 
 for song_data in song_datas:
@@ -52,15 +54,15 @@ for song_data in song_datas:
     sorted_input_paths = sorted(input_paths, key=extract_number)
     # 결과물 생성 폴더
     if not os.path.exists(
-        f"/content/drive/MyDrive/songRequest/results/20241022/{request_user_id}/{request_id}/[{pitch_value}][{voice_model}]{song_title}"
+        f"/content/drive/MyDrive/songRequest/results/{request_date}/{request_user_id}/{request_id}/[{pitch_value}][{voice_model}]{song_title}"
     ):
-        os.mkdir(
-            f"/content/drive/MyDrive/songRequest/results/20241022/{request_user_id}/{request_id}/[{pitch_value}][{voice_model}]{song_title}"
+        os.makedirs(
+            f"/content/drive/MyDrive/songRequest/results/{request_date}/{request_user_id}/{request_id}/[{pitch_value}][{voice_model}]{song_title}"
         )
 
     for input_path in sorted_input_paths:
         file_name = os.path.basename(input_path)
-        output_path = f"/content/drive/MyDrive/songRequest/results/20241022/{request_user_id}/{request_id}/[{pitch_value}][{voice_model}]{song_title}/{file_name}"
+        output_path = f"/content/drive/MyDrive/songRequest/results/{request_date}/{request_user_id}/{request_id}/[{pitch_value}][{voice_model}]{song_title}/{file_name}"
         voice_change(
             voice_model,
             input_path,
