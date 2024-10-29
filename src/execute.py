@@ -38,7 +38,7 @@ if __name__ == "__main__":
     song_datas_str = sys.argv[1]
     request_date_str = sys.argv[2]
     song_datas = json.loads(song_datas_str)
-    request_date = number(request_date_str)
+    request_date = int(request_date_str)
     print(song_datas)
 
 for song_data in song_datas:
