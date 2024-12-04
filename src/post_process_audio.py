@@ -4,7 +4,7 @@ from pydub import AudioSegment
 import numpy as np
 
 
-def apply_reverb(result_folder, vocal_file_name):
+def apply_reverb(result_folder,index,vocal_file_name):
     # 리버브 플러그인 로드
     reverb = load_plugin("/app/audio_plugins/TAL-Reverb-4.vst3")
 
@@ -19,8 +19,10 @@ def apply_reverb(result_folder, vocal_file_name):
     reverb.dry = 100.0  # Dry 100
     reverb.wet = 35.0  # Wet 35
 
+    file_name = vocal_file_name.replace("_vocal.mp3", "")
+    
     # 오디오 처리 및 저장
-    with AudioFile(f"{result_folder}/{vocal_file_name}") as f:
+    with AudioFile(f"{result_folder}/{file_name}_vocal.mp3") as f:
         audio = f.read(f.frames)
         samplerate = f.samplerate
 
@@ -43,14 +45,14 @@ def apply_reverb(result_folder, vocal_file_name):
 
         # 결과 저장
         with AudioFile(
-            f"{result_folder}/ai_vocal_with_reverb.mp3",
+            f"{result_folder}/{file_name}_reverb.mp3",
             "w",
             samplerate,
             num_channels=2,
         ) as out_f:
             out_f.write(effected)
 
-    return f"{result_folder}/ai_vocal_with_reverb.mp3"
+    return f"{result_folder}/{file_name}_reverb.mp3"
 
 
 def mix_audio(vocal_path, mr_path, output_path):

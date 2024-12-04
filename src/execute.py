@@ -147,7 +147,7 @@ class SQSProcessor:
                 songRequestId = song_data["request_id"]
                 infer_data_body = {
                     "songRequestId": songRequestId,
-                    "audioUrlList": song_uris,
+                    "audioPairList": song_uris,
                 }
                 logger.info(
                     f"api 전송을 위한 데이터 request id : {songRequestId}, urlList : {song_uris}"

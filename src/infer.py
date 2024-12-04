@@ -326,15 +326,18 @@ def infer_ai_cover(
                     raise
 
                 # 믹싱
-                ai_vocal_path = apply_reverb(result_folder, file_name)
-                mix_audio(
-                    ai_vocal_path,
-                    mr_file_path,
-                    f"{result_folder}/[{pitch_value}][{voice_model}]{index}_{song_title}_result.mp3",
-                )
-
-                s3_url = f"https://song-request-bucket-1.s3.ap-northeast-2.amazonaws.com//song-requests/{request_id}/[{pitch_value}][{voice_model}]{song_title}/[{pitch_value}][{voice_model}]{index}_{song_title}_result.mp3"
-                song_urls.append(s3_url)
+                ai_vocal_path = apply_reverb(result_folder,index,file_name)
+                real_file_name = file_name.replace("_vocal.mp3", "")
+                # mix_audio(
+                #     ai_vocal_path,
+                #     mr_file_path,
+                #     f"{result_folder}/[{pitch_value}][{voice_model}]{index}_{song_title}_result.mp3",
+                # )
+                audioPair = {
+                    "mrUrl" : f"https://song-request-bucket-1.s3.ap-northeast-2.amazonaws.com//song-requests/{request_id}/[{pitch_value}][{voice_model}]{song_title}/{real_file_name}_mr.mp3",
+                    "vocalUrl" : f"https://song-request-bucket-1.s3.ap-northeast-2.amazonaws.com//song-requests/{request_id}/[{pitch_value}][{voice_model}]{song_title}/{real_file_name}_reverb.mp3",
+                }
+                song_urls.append(audioPair)
 
         result_path = f"./temp/{request_id}"
         logger.info(
