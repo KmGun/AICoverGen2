@@ -143,7 +143,7 @@ class SQSProcessor:
                 logger.info("S3 upload completed")
 
                 # api 요청
-                infer_complete_api_url = "https://asia-northeast3-homebrew-dev-c5bf9.cloudfunctions.net/processSongRequest"
+                infer_complete_api_url = "https://asia-northeast3-homebrew-prod.cloudfunctions.net/processSongRequest"
                 songRequestId = song_data["request_id"]
                 infer_data_body = {
                     "songRequestId": songRequestId,
